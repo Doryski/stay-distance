@@ -1,0 +1,67 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build and publish release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # pnpm version is read from the "packageManager" field in package.json.
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build extension
+        run: pnpm build
+
+      - name: Resolve version
+        id: version
+        run: echo "version=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Verify package.json and manifest.json match tag
+        env:
+          EXPECTED: ${{ steps.version.outputs.version }}
+        run: |
+          set -euo pipefail
+          pkg=$(node -p "require('./package.json').version")
+          manifest=$(node -p "require('./public/manifest.json').version")
+          echo "tag=$EXPECTED  package.json=$pkg  manifest.json=$manifest"
+          if [ "$pkg" != "$EXPECTED" ]; then
+            echo "::error::package.json version ($pkg) does not match tag ($EXPECTED). Run 'pnpm release' instead of tagging manually."
+            exit 1
+          fi
+          if [ "$manifest" != "$EXPECTED" ]; then
+            echo "::error::public/manifest.json version ($manifest) does not match tag ($EXPECTED). Run 'pnpm release' instead of tagging manually."
+            exit 1
+          fi
+
+      - name: Package dist/ as zip
+        run: |
+          cd dist
+          zip -r "../stay-distance-v${{ steps.version.outputs.version }}.zip" .
+
+      - name: Create GitHub Release
+        # Pinned to commit SHA of v2.6.2 (third-party action with contents: write).
+        # Update by resolving the desired tag with:
+        #   gh api repos/softprops/action-gh-release/git/refs/tags/<tag> --jq .object.sha
+        uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2.6.2
+        with:
+          files: stay-distance-v${{ steps.version.outputs.version }}.zip
+          generate_release_notes: true
+          draft: false
+          prerelease: ${{ contains(github.ref_name, '-') }}

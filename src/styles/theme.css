@@ -1,0 +1,137 @@
+@import "tailwindcss";
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+
+  --color-brand-500: #2e7d4f;
+  --color-brand-400: #4caf7a;
+  --color-brand-warm: #f2a541;
+  --color-brand-warm-soft: #f2b860;
+}
+
+:root {
+  --radius: 0.5rem;
+
+  --background: #fafaf7;
+  --foreground: #1c2b2d;
+  --card: #ffffff;
+  --card-foreground: #1c2b2d;
+  --popover: #ffffff;
+  --popover-foreground: #1c2b2d;
+  --primary: #2e7d4f;
+  --primary-foreground: #fafaf7;
+  --secondary: #eef3ee;
+  --secondary-foreground: #1c2b2d;
+  --muted: #f1f2ee;
+  --muted-foreground: #6b7a7c;
+  --accent: #f2a541;
+  --accent-foreground: #1c2b2d;
+  --destructive: #b3392f;
+  --destructive-foreground: #fafaf7;
+  --border: #e6e4dc;
+  --input: #e6e4dc;
+  --ring: #2e7d4f;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    --background: #121815;
+    --foreground: #eaf1ee;
+    --card: #1a221f;
+    --card-foreground: #eaf1ee;
+    --popover: #1a221f;
+    --popover-foreground: #eaf1ee;
+    --primary: #4caf7a;
+    --primary-foreground: #0b120f;
+    --secondary: #1f2926;
+    --secondary-foreground: #eaf1ee;
+    --muted: #1e2623;
+    --muted-foreground: #8fa0a2;
+    --accent: #f2b860;
+    --accent-foreground: #0b120f;
+    --destructive: #e06a60;
+    --destructive-foreground: #0b120f;
+    --border: #2a332f;
+    --input: #2a332f;
+    --ring: #4caf7a;
+  }
+}
+
+.dark {
+  --background: #121815;
+  --foreground: #eaf1ee;
+  --card: #1a221f;
+  --card-foreground: #eaf1ee;
+  --popover: #1a221f;
+  --popover-foreground: #eaf1ee;
+  --primary: #4caf7a;
+  --primary-foreground: #0b120f;
+  --secondary: #1f2926;
+  --secondary-foreground: #eaf1ee;
+  --muted: #1e2623;
+  --muted-foreground: #8fa0a2;
+  --accent: #f2b860;
+  --accent-foreground: #0b120f;
+  --destructive: #e06a60;
+  --destructive-foreground: #0b120f;
+  --border: #2a332f;
+  --input: #2a332f;
+  --ring: #4caf7a;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  html,
+  body {
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv11", "ss01";
+    -webkit-font-smoothing: antialiased;
+  }
+
+  button {
+    font-family: inherit;
+  }
+}

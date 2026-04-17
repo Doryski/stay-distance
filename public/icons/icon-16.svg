@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-label="Stay Distance">
+  <circle cx="64" cy="64" r="44" fill="none" stroke="#6B7A7C" stroke-opacity="0.55" stroke-width="6" />
+  <path d="M64 20 C 46 20 32 34 32 52 C 32 76 64 108 64 108 C 64 108 96 76 96 52 C 96 34 82 20 64 20 Z" fill="#2E7D4F" />
+  <circle cx="64" cy="50" r="12" fill="#FAFAF7" />
+</svg>
